@@ -49,6 +49,12 @@ redact_hook="$(jq -r '.params.redact_hook_url // "true"' < "${payload}")"
 proxy="$(jq -r '.source.proxy // "null"' < "${payload}")"
 proxy_https_tunnel="$(jq -r '.source.proxy_https_tunnel // "false"' < "${payload}")"
 
+# RONDAY: lookup username mappings
+lookup=$(grep user_mappings.txt | awk -F: '{print $2}')
+if [[ $lookup != "" ]]; then
+  username=$lookup
+fi
+
 # Read the env_file and export it in the current console
 env_file="$(jq -r '.params.env_file // ""' < "${payload}")"
 if [ -f "$env_file" ]; then
@@ -132,7 +138,7 @@ then
   body="$(cat <<EOF
 {
   "text": ${text_interpolated},
-  "username": ${username},
+  "username": "<@${username}>",
   "link_names": ${link_names},
   "icon_url": ${icon_url},
   "icon_emoji": ${icon_emoji},
@@ -195,7 +201,7 @@ then
   "metadata": [
     {"name": "url",               "value": ${redacted_webhook_url}},
     {"name": "channel",           "value": "${channels}"          },
-    {"name": "username",          "value": ${username}            },
+    {"name": "username",          "value": "<@${username}>"          },
     {"name": "text",              "value": ${text_interpolated}   },
     {"name": "text_file",         "value": $( echo "$text_file"         | jq -R . ) },
     {"name": "text_file_exists",  "value": $( echo "$text_file_exists"  | jq -R . ) },
