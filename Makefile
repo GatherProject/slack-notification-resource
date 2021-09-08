@@ -1,4 +1,4 @@
-IMAGE   ?= cfcommunity/slack-notification-resource
+IMAGE   ?= 983760647947.dkr.ecr.us-east-2.amazonaws.com/ronday-build-tools
 VERSION ?= dev
 
 build:
