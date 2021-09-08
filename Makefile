@@ -9,6 +9,7 @@ build:
 	  . -t $(IMAGE):$(VERSION)
 
 push: build
+	aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 983760647947.dkr.ecr.us-east-2.amazonaws.com
 	docker push $(IMAGE):$(VERSION)
 
 release: build
