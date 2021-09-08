@@ -16,7 +16,7 @@ RUN apk add --no-cache curl bash jq gettext-dev
 COPY check /opt/resource/check
 COPY in    /opt/resource/in
 COPY out   /opt/resource/out
-COPY user_mappings.txt /opt/resource/user_mappings.txt
+COPY user_mappings.txt /opt/ressource/user_mappings.txt
 
 RUN chmod +x /opt/resource/out /opt/resource/in /opt/resource/check
 
