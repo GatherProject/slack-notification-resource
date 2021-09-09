@@ -50,7 +50,7 @@ proxy="$(jq -r '.source.proxy // "null"' < "${payload}")"
 proxy_https_tunnel="$(jq -r '.source.proxy_https_tunnel // "false"' < "${payload}")"
 
 # RONDAY: lookup username mappings
-lookup=$(grep "${username}" /opt/resource/user_mappings.txt | awk -F: '{print $2}')
+lookup=$(grep -E "^${username}:" /opt/resource/user_mappings.txt | awk -F: '{print $2}')
 if [[ "${lookup}" != "" ]]; then
   username="${lookup}"
 fi
